@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">LivePlayer</string>
+    <string name="zues_load_more_loading">正在加载…</string>
+    <string name="zues_record_pull_refresh">下拉刷新</string>
+    <string name="zues_record_release_refresh">松开刷新</string>
+    <string name="zues_record_refreshing">正在刷新</string>
+    <string name="zues_refresh">下拉刷新</string>
 </resources>

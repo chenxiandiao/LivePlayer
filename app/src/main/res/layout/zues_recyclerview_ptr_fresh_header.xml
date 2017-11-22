@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/text_contentLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp"
+    android:background="@color/zues_background">
+
+    <!-- 箭头图像、进度条 -->
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/tv_refresh_tip"
+        android:layout_toStartOf="@+id/tv_refresh_tip">
+
+        <ImageView
+            android:id="@+id/iv_pull_to_fresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/zues_pull2refresh_normal"
+            android:visibility="visible"/>
+
+        <tv.chushou.zues.widget.animation.AnimationImageView
+            android:id="@+id/iv_freshing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/zues_pull2refresh_animation"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_refresh_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:text="@string/zues_refresh"
+        android:textColor="@color/zues_littlegray"
+        android:textSize="12sp" />
+</RelativeLayout>

@@ -25,5 +25,17 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:25.2.0'
+    compile "com.android.support:recyclerview-v7:25.2.0"
+    compile "in.srain.cube:ultra-ptr:1.0.11"
+
+    compile "io.reactivex.rxjava2:rxjava:$rootProject.rxjava"
+    compile "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroid"
+
+    compile "com.facebook.fresco:fresco:$rootProject.fresco"
+    compile "com.facebook.fresco:drawee-span:$rootProject.fresco"
+    compile "com.facebook.fresco:animated-base:$rootProject.fresco"
+    compile "com.facebook.fresco:animated-gif:$rootProject.fresco"
+    compile "com.facebook.fresco:imagepipeline-okhttp3:$rootProject.fresco"
+
     testCompile 'junit:junit:4.12'
 }

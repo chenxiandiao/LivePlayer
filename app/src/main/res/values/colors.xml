@@ -3,4 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="zues_background">#f0f2f5</color>
+    <color name="zues_littlegray">#939ba2</color>
+    <color name="hover_gray_color">#dadada</color>
 </resources>
