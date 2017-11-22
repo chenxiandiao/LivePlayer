@@ -8,7 +8,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 
 import com.cxd.android.liveplayer.R;
 import com.cxd.android.liveplayer.widgets.recyclerview.DefaultLoadMoreView;
@@ -117,6 +119,8 @@ public class SwipeRefreshRecyclerView extends CustomSwipeRefreshLayout implement
                 }
             });
         }
+
+        mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
     }
 
     public void setOnePageSize(int onePageSize) {
@@ -364,6 +368,44 @@ public class SwipeRefreshRecyclerView extends CustomSwipeRefreshLayout implement
         recyclerView.addItemDecoration(itemDecration);
     }
 
+
+    /**
+     * 防止顶部下拉刷新可能触发上拉加载更多
+     */
+    private float startY;
+    private float startX;
+    private boolean mIsUp;
+    private float mTouchSlop;
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        int action = ev.getAction();
+        switch (action) {
+            case MotionEvent.ACTION_DOWN:
+                mIsUp = false;
+                // 记录手指按下的位置
+                startY = ev.getY();
+                startX = ev.getX();
+                break;
+            case MotionEvent.ACTION_MOVE:
+
+                // 获取当前手指位置
+                float endY = ev.getY();
+                float distanceY = Math.abs(endY - startY);
+                float distanceY2 = endY - startY;
+                if (distanceY > mTouchSlop && distanceY2 < 0) {
+                    mIsUp = true;
+                } else {
+                    mIsUp = false;
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                break;
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
     private RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
 
         private int lastVisiblePosition = RecyclerView.NO_POSITION;
@@ -412,7 +454,8 @@ public class SwipeRefreshRecyclerView extends CustomSwipeRefreshLayout implement
             int totalItemCount = layoutManager.getItemCount();
 
             //如果不是正处于滑动阶段，并且已经滑到了最后一项,减去footer
-            if ((visibleItemCount > 0 && newState == RecyclerView.SCROLL_STATE_IDLE && (lastVisiblePosition) >= totalItemCount - 1)) {
+            if ((visibleItemCount > 0 && newState == RecyclerView.SCROLL_STATE_IDLE && (lastVisiblePosition) >= totalItemCount - 1)
+                    && mIsUp) {
                 if (!isLoadingMore && hasMoreItems && loadMoreListener != null && adapter.getItemCount() >= smallPageSize) {
                     loadMoreListener.loadMore();
                     isLoadingMore = true;
